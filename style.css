@@ -1,0 +1,513 @@
+/* ============================
+   Monitoring Substansi Nilai Mahasiswa
+   ============================ */
+
+:root {
+  --primary: #1a56db;
+  --primary-dark: #1342b0;
+  --success: #057a55;
+  --warning: #c27803;
+  --danger: #c81e1e;
+  --info: #0e9f6e;
+  --bg: #f3f4f6;
+  --card-bg: #ffffff;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---- Header ---- */
+header {
+  background: linear-gradient(135deg, #1a56db 0%, #0e9f6e 100%);
+  color: #fff;
+  padding: 2.5rem 1.5rem 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+header p.subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  opacity: 0.9;
+  position: relative;
+}
+
+/* ---- Main container ---- */
+main {
+  max-width: 1100px;
+  margin: -2rem auto 0;
+  padding: 0 1rem 3rem;
+  position: relative;
+}
+
+/* ---- Section cards ---- */
+.section-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title .icon {
+  font-size: 1.4rem;
+}
+
+/* ---- Grade table ---- */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+thead th {
+  background: #f0f4ff;
+  color: var(--primary);
+  font-weight: 700;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--primary);
+  white-space: nowrap;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+tbody td {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+}
+
+/* Grade badge */
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  letter-spacing: -0.5px;
+}
+
+.grade-A    { background: #d1fae5; color: #065f46; }
+.grade-A-   { background: #d1fae5; color: #065f46; }
+.grade-Bp   { background: #dbeafe; color: #1e40af; }
+.grade-B    { background: #dbeafe; color: #1e40af; }
+.grade-B-   { background: #dbeafe; color: #1e40af; }
+.grade-Cp   { background: #fef9c3; color: #713f12; }
+.grade-C    { background: #fef9c3; color: #713f12; }
+.grade-D    { background: #ffedd5; color: #7c2d12; }
+.grade-E    { background: #fee2e2; color: #7f1d1d; }
+
+/* Quality bar */
+.quality-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quality-bar .bar {
+  height: 8px;
+  border-radius: 99px;
+  background: #e5e7eb;
+  flex: 1;
+  max-width: 120px;
+  overflow: hidden;
+}
+
+.quality-bar .bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+
+.bar-A    { background: #10b981; }
+.bar-A-   { background: #10b981; }
+.bar-Bp   { background: #3b82f6; }
+.bar-B    { background: #3b82f6; }
+.bar-B-   { background: #60a5fa; }
+.bar-Cp   { background: #f59e0b; }
+.bar-C    { background: #f59e0b; }
+.bar-D    { background: #f97316; }
+.bar-E    { background: #ef4444; }
+
+.quality-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ---- Info boxes ---- */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.info-box {
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+}
+
+.info-box .label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.info-box .value {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.info-box .desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.info-box.green  { background: #ecfdf5; border-color: #a7f3d0; }
+.info-box.green .label  { color: #065f46; }
+.info-box.green .value  { color: #065f46; }
+
+.info-box.blue   { background: #eff6ff; border-color: #bfdbfe; }
+.info-box.blue .label   { color: #1e40af; }
+.info-box.blue .value   { color: #1e40af; }
+
+.info-box.yellow { background: #fefce8; border-color: #fde68a; }
+.info-box.yellow .label { color: #713f12; }
+.info-box.yellow .value { color: #713f12; }
+
+.info-box.red    { background: #fff1f2; border-color: #fecdd3; }
+.info-box.red .label    { color: #881337; }
+.info-box.red .value    { color: #881337; }
+
+/* ---- GPA Calculator ---- */
+.calc-intro {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+  margin-bottom: 1.25rem;
+}
+
+#courses-container .course-row {
+  display: grid;
+  grid-template-columns: 1fr auto 110px 36px;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+#courses-container .course-row input,
+#courses-container .course-row select {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.93rem;
+  background: #f9fafb;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+#courses-container .course-row input:focus,
+#courses-container .course-row select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12);
+  background: #fff;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 0.45rem 0.65rem;
+  border-radius: 7px;
+}
+
+.btn-danger:hover {
+  background: #fecaca;
+}
+
+.calc-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* GPA result */
+#gpa-result {
+  margin-top: 1.5rem;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(135deg, #eff6ff, #ecfdf5);
+  border: 1px solid #bfdbfe;
+  display: none;
+}
+
+#gpa-result h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.gpa-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.gpa-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.gpa-scale {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.gpa-predikat {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gpa-detail {
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ---- Criteria accordion ---- */
+.criteria-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.criteria-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.criteria-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: #f9fafb;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.criteria-header:hover {
+  background: #f3f4f6;
+}
+
+.criteria-header .chevron {
+  margin-left: auto;
+  transition: transform 0.25s;
+  color: var(--text-muted);
+}
+
+.criteria-item.open .criteria-header .chevron {
+  transform: rotate(180deg);
+}
+
+.criteria-body {
+  padding: 0 1.1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.25s;
+}
+
+.criteria-item.open .criteria-body {
+  max-height: 600px;
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.criteria-body p,
+.criteria-body ul {
+  color: #374151;
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.criteria-body ul {
+  padding-left: 1.4rem;
+}
+
+.criteria-body ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* ---- Predikat kelulusan ---- */
+.predikat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.predikat-card {
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid transparent;
+}
+
+.predikat-card .predikat-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.predikat-card .predikat-range {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.predikat-card .predikat-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.predikat-card.pujian     { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.predikat-card.sangat-memuaskan { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+.predikat-card.memuaskan  { background: #fefce8; border-color: #fde68a; color: #713f12; }
+.predikat-card.cukup      { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+
+/* ---- Footer ---- */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  background: var(--card-bg);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .section-card {
+    padding: 1.25rem 1rem;
+  }
+
+  #courses-container .course-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  #courses-container .course-row input[type="text"] {
+    grid-column: 1 / -1;
+  }
+
+}
