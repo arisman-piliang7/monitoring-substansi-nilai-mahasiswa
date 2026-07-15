@@ -126,6 +126,12 @@ def load_all_students() -> pd.DataFrame:
     return df
 
 
+NUMERIC_STUDENT_COLS = [
+    "tugas", "uts", "formatif", "tugas2", "uas",
+    "bintang", "diskusi_mteam", "nilai_aktual", "absensi",
+]
+
+
 def load_student(nim: str):
     conn = get_conn()
     try:
@@ -134,7 +140,21 @@ def load_student(nim: str):
         )
     finally:
         conn.close()
-    return df.iloc[0] if not df.empty else None
+    if df.empty:
+        return None
+    for col in NUMERIC_STUDENT_COLS:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+    return df.iloc[0]
+
+
+def fmt_num(value, fmt="{:.0f}", default="-"):
+    """Format angka dengan aman; kembalikan '-' jika nilainya kosong/None/NaN."""
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return default
+    try:
+        return fmt.format(value)
+    except (ValueError, TypeError):
+        return default
 
 
 def load_meetings_for_student(nim: str) -> pd.DataFrame:
@@ -415,22 +435,27 @@ def render_student_view():
 
     bintang_val = row["bintang"] if pd.notna(row["bintang"]) else 0
 
+    if pd.notna(row["nilai_aktual"]):
+        peringkat_display = f"#{int((class_df['nilai_aktual'] > row['nilai_aktual']).sum() + 1)}"
+    else:
+        peringkat_display = "-"
+
     cols = st.columns(5)
     metrics = [
         (
             "Nilai Akhir",
-            f"{row['nilai_aktual']:.0f}",
-            f"Nilai huruf: {row['nilai_huruf']}",
+            fmt_num(row["nilai_aktual"]),
+            f"Nilai huruf: {row['nilai_huruf'] or '-'}",
         ),
-        ("Kehadiran", f"{row['absensi']:.0f}%", "tingkat kehadiran"),
+        ("Kehadiran", fmt_num(row["absensi"], "{:.0f}%"), "tingkat kehadiran"),
         (
             "Rata-rata Kelas",
-            f"{class_df['nilai_aktual'].mean():.1f}",
+            fmt_num(class_df["nilai_aktual"].mean(), "{:.1f}"),
             f"Kelas {row['kelas']}",
         ),
         (
             "Peringkat",
-            f"#{int((class_df['nilai_aktual'] > row['nilai_aktual']).sum() + 1)}",
+            peringkat_display,
             f"dari {len(class_df)} mahasiswa",
         ),
         ("⭐ Bintang", f"{bintang_val:.0f}", "reward keaktifan"),
@@ -541,16 +566,16 @@ def render_student_view():
                 "Nilai Huruf",
             ],
             "Nilai": [
-                row["tugas"],
-                row["uts"],
-                row["formatif"],
-                row["tugas2"],
-                row["uas"],
-                row["diskusi_mteam"] if pd.notna(row["diskusi_mteam"]) else "-",
-                bintang_val,
-                row["absensi"],
-                row["nilai_aktual"],
-                row["nilai_huruf"],
+                fmt_num(row["tugas"]),
+                fmt_num(row["uts"]),
+                fmt_num(row["formatif"]),
+                fmt_num(row["tugas2"]),
+                fmt_num(row["uas"]),
+                fmt_num(row["diskusi_mteam"]),
+                fmt_num(bintang_val),
+                fmt_num(row["absensi"]),
+                fmt_num(row["nilai_aktual"]),
+                row["nilai_huruf"] or "-",
             ],
         }
     )
