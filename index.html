@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitoring Substansi Nilai Mahasiswa</title>
+  <meta name="description" content="Aplikasi yang menjelaskan substansi nilai mahasiswa secara detail agar tidak ada keraguan." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======== HEADER ======== -->
+  <header>
+    <h1>📊 Monitoring Substansi Nilai Mahasiswa</h1>
+    <p class="subtitle">Pahami makna setiap nilai secara detail &mdash; tidak ada lagi keraguan! 😄</p>
+  </header>
+
+  <main>
+
+    <!-- ======== 1. Tabel Konversi Nilai ======== -->
+    <section class="section-card" id="tabel-nilai">
+      <h2 class="section-title"><span class="icon">📋</span> Tabel Konversi Nilai</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nilai Huruf</th>
+              <th>Rentang Angka</th>
+              <th>Bobot (Poin)</th>
+              <th>Kualitas</th>
+            </tr>
+          </thead>
+          <tbody id="grade-tbody">
+            <!-- Filled by script.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <p style="font-size:0.87rem;color:#6b7280;">
+          ⓘ Skala penilaian mengacu pada Permendikbud No. 3 Tahun 2020 dan kebijakan internal perguruan tinggi.
+          Rentang nilai dapat berbeda antar institusi.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======== 2. Konverter Nilai Cepat ======== -->
+    <section class="section-card" id="konverter">
+      <h2 class="section-title"><span class="icon">🔄</span> Konverter Nilai Cepat</h2>
+      <p style="font-size:0.93rem;color:#6b7280;margin-bottom:1rem;">
+        Masukkan nilai angka (0–100) untuk langsung mengetahui nilai huruf dan bobotnya.
+      </p>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <input
+          type="number"
+          id="score-input"
+          placeholder="Contoh: 78"
+          min="0" max="100" step="0.5"
+          style="padding:0.6rem 0.9rem;border:1px solid #e5e7eb;border-radius:8px;font-size:1.05rem;width:140px;outline:none;"
+          aria-label="Masukkan nilai angka"
+        />
+        <span style="font-size:1.5rem;color:#9ca3af;">→</span>
+        <span id="score-output" style="font-size:1.05rem;color:#6b7280;">—</span>
+      </div>
+    </section>
+
+    <!-- ======== 3. Substansi / Makna Nilai ======== -->
+    <section class="section-card" id="substansi">
+      <h2 class="section-title"><span class="icon">🔍</span> Substansi &amp; Makna Setiap Nilai</h2>
+      <p style="font-size:0.93rem;color:#6b7280;margin-bottom:1.2rem;">
+        Klik setiap nilai untuk melihat penjelasan detail tentang apa yang dimaksud dan apa yang diharapkan mahasiswa.
+      </p>
+
+      <div class="criteria-list">
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-A" style="flex-shrink:0;">A</span>
+            <span>A &mdash; Istimewa (85–100 | 4,00)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa menunjukkan penguasaan materi yang <strong>sempurna</strong>, mampu menganalisis, mengevaluasi, dan menciptakan sesuatu yang baru berdasarkan konsep yang dipelajari. Nilai ini mencerminkan dedikasi tinggi, kehadiran penuh, dan kinerja tugas/ujian yang sangat memuaskan.</p>
+            <ul>
+              <li>Menguasai seluruh kompetensi inti mata kuliah.</li>
+              <li>Mampu menerapkan ilmu secara mandiri dan kritis.</li>
+              <li>Hasil tugas dan ujian di atas rata-rata kelas.</li>
+              <li>Sering memberikan kontribusi aktif di kelas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-A-" style="flex-shrink:0;">A-</span>
+            <span>A&minus; &mdash; Sangat Baik+ (80–84 | 3,75)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa menunjukkan pemahaman materi yang <strong>sangat baik</strong> dengan sedikit kekurangan kecil yang tidak bersifat mendasar. Kinerja secara keseluruhan melampaui ekspektasi dasar.</p>
+            <ul>
+              <li>Menguasai hampir seluruh kompetensi inti.</li>
+              <li>Tugas dan ujian dikerjakan dengan kualitas tinggi.</li>
+              <li>Mampu menganalisis permasalahan secara mendalam.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-Bp" style="flex-shrink:0;">B+</span>
+            <span>B+ &mdash; Baik+ (75–79 | 3,50)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa memiliki pemahaman yang <strong>baik</strong> terhadap materi kuliah dan mampu menerapkan konsep dengan benar, meski masih terdapat beberapa kelemahan dalam hal kedalaman analisis.</p>
+            <ul>
+              <li>Memahami konsep utama dengan baik.</li>
+              <li>Mampu mengerjakan tugas dengan kualitas di atas rata-rata.</li>
+              <li>Aktif dan terlibat dalam diskusi kelas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-B" style="flex-shrink:0;">B</span>
+            <span>B &mdash; Baik (70–74 | 3,00)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa memenuhi standar kompetensi yang ditetapkan dengan kinerja yang <strong>memuaskan</strong>. Pemahaman materi cukup solid untuk mendukung pembelajaran lanjutan.</p>
+            <ul>
+              <li>Memahami dan menerapkan konsep inti dengan benar.</li>
+              <li>Tugas diselesaikan tepat waktu dengan kualitas baik.</li>
+              <li>Kehadiran dan partisipasi kelas memadai.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-B-" style="flex-shrink:0;">B-</span>
+            <span>B&minus; &mdash; Baik- (65–69 | 2,75)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa memahami konsep dasar namun masih terdapat beberapa kekurangan yang perlu diperbaiki. Kinerja <strong>cukup baik</strong> namun belum optimal.</p>
+            <ul>
+              <li>Memahami sebagian besar konsep inti.</li>
+              <li>Masih terdapat kesalahan dalam penerapan konsep lanjutan.</li>
+              <li>Perlu meningkatkan kedalaman pemahaman.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-Cp" style="flex-shrink:0;">C+</span>
+            <span>C+ &mdash; Cukup+ (60–64 | 2,50)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa menunjukkan pemahaman yang <strong>cukup</strong> terhadap materi kuliah, namun masih memerlukan bimbingan lebih lanjut untuk memahami konsep yang lebih kompleks.</p>
+            <ul>
+              <li>Memahami konsep dasar dengan benar.</li>
+              <li>Penerapan konsep masih kurang tepat pada soal tingkat lanjut.</li>
+              <li>Perlu belajar lebih mandiri dan aktif.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-C" style="flex-shrink:0;">C</span>
+            <span>C &mdash; Cukup (55–59 | 2,00)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Nilai minimum yang umumnya diterima sebagai lulus. Mahasiswa memiliki pemahaman <strong>dasar</strong> yang memadai namun belum menguasai kompetensi secara menyeluruh.</p>
+            <ul>
+              <li>Hanya menguasai konsep-konsep paling dasar.</li>
+              <li>Performa tugas dan ujian masih di bawah rata-rata kelas.</li>
+              <li>Sangat disarankan mengulang atau memperbaiki pemahaman sebelum mata kuliah prasyarat lanjutan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-D" style="flex-shrink:0;">D</span>
+            <span>D &mdash; Kurang (40–54 | 1,00)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa menunjukkan pemahaman yang <strong>sangat terbatas</strong>. Nilai ini biasanya dianggap tidak memenuhi syarat untuk mata kuliah prasyarat. Mahasiswa perlu mengulang mata kuliah.</p>
+            <ul>
+              <li>Pemahaman materi sangat minim.</li>
+              <li>Banyak tugas tidak diselesaikan atau salah.</li>
+              <li>Wajib mengulang (remedi/remedial) jika mata kuliah bersifat prasyarat.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="criteria-item">
+          <div class="criteria-header">
+            <span class="grade-badge grade-E" style="flex-shrink:0;">E</span>
+            <span>E &mdash; Tidak Lulus (0–39 | 0,00)</span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="criteria-body">
+            <p>Mahasiswa <strong>tidak lulus</strong> mata kuliah. Nilai ini berpengaruh signifikan terhadap IPK dan masa studi. Mahasiswa wajib mengulang mata kuliah pada semester berikutnya.</p>
+            <ul>
+              <li>Tidak memenuhi kompetensi minimum yang dipersyaratkan.</li>
+              <li>Dapat disebabkan oleh kehadiran di bawah batas minimal, tidak mengikuti ujian, atau nilai ujian yang sangat rendah.</li>
+              <li>Wajib mengulang mata kuliah; nilai sebelumnya digantikan nilai baru.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======== 4. Predikat Kelulusan ======== -->
+    <section class="section-card" id="predikat">
+      <h2 class="section-title"><span class="icon">🎓</span> Predikat Kelulusan</h2>
+      <p style="font-size:0.93rem;color:#6b7280;margin-bottom:1.2rem;">
+        Predikat kelulusan ditentukan berdasarkan IPK akhir dan masa studi (sesuai Permendikbud No. 3 Tahun 2020).
+      </p>
+
+      <div class="predikat-cards">
+        <div class="predikat-card pujian">
+          <div class="predikat-title">🏅 Cum Laude</div>
+          <div class="predikat-range">IPK ≥ 3,51</div>
+          <div class="predikat-desc">Dengan Pujian. Masa studi normal (≤ 4 tahun untuk S1) dan tidak ada nilai di bawah B.</div>
+        </div>
+        <div class="predikat-card sangat-memuaskan">
+          <div class="predikat-title">🎓 Sangat Memuaskan</div>
+          <div class="predikat-range">IPK 3,01 – 3,50</div>
+          <div class="predikat-desc">Prestasi akademik yang sangat baik dan konsisten sepanjang masa studi.</div>
+        </div>
+        <div class="predikat-card memuaskan">
+          <div class="predikat-title">✅ Memuaskan</div>
+          <div class="predikat-range">IPK 2,76 – 3,00</div>
+          <div class="predikat-desc">Memenuhi standar kompetensi yang ditetapkan dengan kinerja memuaskan.</div>
+        </div>
+        <div class="predikat-card cukup">
+          <div class="predikat-title">📘 Cukup</div>
+          <div class="predikat-range">IPK 2,00 – 2,75</div>
+          <div class="predikat-desc">Memenuhi syarat kelulusan minimum. Sangat disarankan meningkatkan performa akademik.</div>
+        </div>
+      </div>
+
+      <div class="info-grid" style="margin-top:1.25rem;">
+        <div class="info-box green">
+          <div class="label">IPK Minimum Lulus</div>
+          <div class="value">2,00</div>
+          <div class="desc">Syarat kelulusan program sarjana (S1)</div>
+        </div>
+        <div class="info-box blue">
+          <div class="label">Batas Cum Laude</div>
+          <div class="value">3,51</div>
+          <div class="desc">Dengan masa studi normal dan tanpa nilai di bawah B</div>
+        </div>
+        <div class="info-box yellow">
+          <div class="label">SKS Minimum S1</div>
+          <div class="value">144</div>
+          <div class="desc">Minimal SKS yang harus ditempuh untuk lulus S1</div>
+        </div>
+        <div class="info-box red">
+          <div class="label">Masa Studi Maksimal</div>
+          <div class="value">7 Tahun</div>
+          <div class="desc">Batas waktu studi program sarjana (14 semester)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== 5. Kalkulator IPK ======== -->
+    <section class="section-card" id="kalkulator">
+      <h2 class="section-title"><span class="icon">🧮</span> Kalkulator IPK</h2>
+      <p class="calc-intro">
+        Masukkan mata kuliah beserta nilai huruf dan jumlah SKS untuk menghitung IPK (Indeks Prestasi Kumulatif) Anda secara otomatis.
+        <br>Rumus: <strong>IPK = Σ (Bobot × SKS) ÷ Σ SKS</strong>
+      </p>
+
+      <div id="courses-container">
+        <!-- Rows filled by script.js -->
+      </div>
+
+      <div class="calc-actions">
+        <button id="btn-add-course" class="btn btn-secondary">
+          <span>＋</span> Tambah Mata Kuliah
+        </button>
+        <button id="btn-calculate" class="btn btn-primary">
+          <span>🧮</span> Hitung IPK
+        </button>
+        <button id="btn-reset" class="btn btn-secondary">
+          <span>↺</span> Reset
+        </button>
+      </div>
+
+      <div id="gpa-result">
+        <h3>Hasil Perhitungan IPK</h3>
+        <div class="gpa-display">
+          <span id="gpa-number" class="gpa-number">—</span>
+          <span class="gpa-scale">/ 4,00</span>
+        </div>
+        <div id="gpa-predikat" class="gpa-predikat"></div>
+        <div id="gpa-detail" class="gpa-detail"></div>
+      </div>
+    </section>
+
+    <!-- ======== 6. Komponen Penilaian ======== -->
+    <section class="section-card" id="komponen">
+      <h2 class="section-title"><span class="icon">⚖️</span> Komponen Penilaian Umum</h2>
+      <p style="font-size:0.93rem;color:#6b7280;margin-bottom:1.2rem;">
+        Nilai akhir mata kuliah umumnya merupakan akumulasi dari beberapa komponen berikut.
+        Bobot dapat berbeda antar mata kuliah dan dosen.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-box blue">
+          <div class="label">Tugas &amp; Kuis</div>
+          <div class="value">20–30%</div>
+          <div class="desc">Tugas mingguan, kuis singkat, dan pekerjaan rumah</div>
+        </div>
+        <div class="info-box green">
+          <div class="label">Ujian Tengah Semester (UTS)</div>
+          <div class="value">25–35%</div>
+          <div class="desc">Evaluasi materi pertengahan semester</div>
+        </div>
+        <div class="info-box yellow">
+          <div class="label">Ujian Akhir Semester (UAS)</div>
+          <div class="value">30–40%</div>
+          <div class="desc">Evaluasi komprehensif seluruh materi semester</div>
+        </div>
+        <div class="info-box red">
+          <div class="label">Kehadiran &amp; Partisipasi</div>
+          <div class="value">5–15%</div>
+          <div class="desc">Kehadiran min. 75% dari total pertemuan</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem;padding:0.9rem 1rem;background:#f0f4ff;border-radius:8px;border-left:4px solid #1a56db;">
+        <p style="font-size:0.88rem;color:#374151;line-height:1.6;">
+          💡 <strong>Catatan:</strong> Kehadiran minimal <strong>75%</strong> dari total pertemuan biasanya merupakan syarat untuk dapat mengikuti Ujian Akhir Semester.
+          Mahasiswa yang tidak memenuhi kehadiran minimum akan langsung mendapat nilai <strong>E</strong> atau tidak diizinkan mengikuti UAS.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======== FOOTER ======== -->
+  <footer>
+    <p>📚 Monitoring Substansi Nilai Mahasiswa &mdash; Dibuat untuk membantu mahasiswa memahami penilaian akademik secara transparan dan detail.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
